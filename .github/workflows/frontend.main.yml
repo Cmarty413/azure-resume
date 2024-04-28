@@ -24,7 +24,7 @@ jobs:
         with:
           inlineScript: |
             az storage blob upload-batch --account-name azureresumecdm --auth-mode key -d '$web' -s frontend/
-        # Update to use Node.js 20
+          # Update to use Node.js 20
         env:
           AZURE_CLI_VERSION: 20
 
@@ -33,7 +33,7 @@ jobs:
         with:
           inlineScript: |
             az cdn endpoint purge --content-paths "/*" --profile-name "azureresumecdm" --name "azureresumecdm" --resource-group "azureresumecdm"
-        # Update to use Node.js 20
+          # Update to use Node.js 20
         env:
           AZURE_CLI_VERSION: 20
 
