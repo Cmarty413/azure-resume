@@ -13,10 +13,14 @@ jobs:
         node-version: [20.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Node.js
+      - name: Set up Node.js 20
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Set up Azure CLI
+        uses: azure/CLI@v1
+        with:
+          azcliversion: latest
       - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
