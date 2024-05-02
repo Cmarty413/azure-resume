@@ -13,30 +13,29 @@ jobs:
         node-version: [20.x]
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Node.js 20
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Set up Azure CLI
         uses: azure/CLI@v1
         with:
           azcliversion: latest
+
       - name: Azure Login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Upload to blob storage
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az storage blob upload-batch --account-name azureresumecdm --auth-mode key -d '$web' -s frontend/
+        run: |
+          az storage blob upload-batch --account-name azureresumecdm --auth-mode key -d '$web' -s frontend/
 
       - name: Purge CDN endpoint
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az cdn endpoint purge --content-paths "/*" --profile-name "azureresumecdm" --name "azureresumecdm" --resource-group "getresumecountercm"
+        run: |
+          az cdn endpoint purge --content-paths "/*" --profile-name "azureresumecdm" --name "azureresumecdm" --resource-group "getresumecountercm"
 
       # Azure logout
       - name: Azure Logout
